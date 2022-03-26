@@ -2,6 +2,11 @@ library(tidyverse)
 library(readxl)
 library(dplyr)
 
-dataset <- read_csv("comtrade.csv")
+#Loading in the dataset
+dataset <- read_csv("psd_graines_Ukraine.csv")
 head(dataset)
-view(dataset)
+# view(dataset)
+
+#filtering for yield in millions of tons
+df <- dataset %>% filter(Unit_Description == "(1000 MT)") #%>%
+  # filter(Attribute_Description == "Yield")
