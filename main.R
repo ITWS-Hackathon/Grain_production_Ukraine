@@ -11,7 +11,18 @@ dataset_land <- read_csv("Ukraine_arableLand_cleanData2.csv", skip = 4)
 #view(dataset_land)
 names(dataset_land)[names(dataset_land) == 'Indicator Code'] <- 'Market Year'
 
-dataset <- merge(dataset_land, dataset_net, by = "Market Year")
+dataset_psd <- read_csv("psd_graines_Ukraine.csv")
+# View(dataset_psd)
+dataset_psd <-  dataset_psd %>% filter(Commodity_Description == "Wheat" & 
+                      Unit_ID == 26)
+dataset_psd <- subset(dataset_psd, select = -c(Commodity_Code,Commodity_Description, 
+                                               Country_Code, Calendar_Year, Month, 
+                                               Attribute_Description, Unit_ID,
+                                               Unit_Description, Attribute_ID) )
+names(dataset_psd)[names(dataset_psd) == 'Market_Year'] <- 'Market Year'
+
+dataset_1 <- merge(dataset_land, dataset_net, by = "Market Year")
+dataset <- merge(dataset_1, dataset_psd, by = "Market Year")
 dataset <- na.omit(dataset)
 #Exploratory Data Analysis
 
@@ -24,20 +35,21 @@ cor(dataset_num)
 #seeing distributions
 hist(dataset$AG.LND.ARBL.ZS)
 hist(dataset$Production)
+hist(dataset$Value)
 
 #determining p-value
 names(dataset)[names(dataset) == 'Market Year'] <- 'Market_Year'
 names(dataset)[names(dataset) == 'AG.LND.ARBL.ZS'] <- 'Arable_Land'
-linreg <- lm(Production ~ Market_Year + Arable_Land,  data = dataset)
+linreg <- lm(Production ~ Market_Year + Arable_Land + Value,  data = dataset)
 summary(linreg)
-# p - value is 0.0003575, null hypothesis does not hold. 
+# p - value is 1.024e-12, null hypothesis does not hold. 
 
 # due to a high intercorrelation, we plan to use Lasso Regression
 #define response variable
 y <- dataset$Production
 
 #define matrix of predictor variables
-X <- data.matrix(dataset[, c('Market_Year', 'Arable_Land')])
+X <- data.matrix(dataset[, c('Market_Year', 'Arable_Land', 'Value')])
 
 #perform k-fold cross-validation to find optimal lambda value
 cv_model <- cv.glmnet(X, y, alpha = 1)
@@ -52,6 +64,15 @@ coef(best_model)
 
 y_predicted <- predict(best_model, s = best_lambda, newx = X)
 #find SST and SSE
+sst <- sum((y - mean(y))^2)
+sse <- sum((y_predicted - y)^2)
+rsq <- 1 - sse/sst
+rsq
+
+library(e1071)
+svr.model <- svm(Production ~ Market_Year + Arable_Land,  data = dataset)
+y_predicted <- predict(svr.model, dataset)
+
 sst <- sum((y - mean(y))^2)
 sse <- sum((y_predicted - y)^2)
 rsq <- 1 - sse/sst
