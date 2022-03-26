@@ -1,0 +1,10 @@
+Feed Grains Database: Custom Query Results
+<div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr>
+			<th scope="col">Year</th><th scope="col">Frequency</th><th scope="col">Attribute</th><th scope="col">Commodity</th><th scope="col">Geography</th><th scope="col">Unit</th><th scope="col">Amount</th>
+		</tr><tr class="textmode">
+			<td>2020</td><td>Nov</td><td>Imports, to U.S. from specified source</td><td>Oats grain</td><td>Ukraine</td><td>1,000 metric tons</td><td>0.052</td>
+		</tr>
+	</table>
+</div>
