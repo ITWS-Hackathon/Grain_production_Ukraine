@@ -51,12 +51,9 @@ best_model <- glmnet(X, y, alpha = 1, lambda = best_lambda)
 coef(best_model)
 
 y_predicted <- predict(best_model, s = best_lambda, newx = X)
-
 #find SST and SSE
 sst <- sum((y - mean(y))^2)
 sse <- sum((y_predicted - y)^2)
-
-#find R-Squared
 rsq <- 1 - sse/sst
 rsq
 
