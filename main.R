@@ -69,14 +69,7 @@ sse <- sum((y_predicted - y)^2)
 rsq <- 1 - sse/sst
 rsq
 
-library(e1071)
-svr.model <- svm(Production ~ Market_Year + Arable_Land,  data = dataset)
-y_predicted <- predict(svr.model, dataset)
-
-sst <- sum((y - mean(y))^2)
-sse <- sum((y_predicted - y)^2)
-rsq <- 1 - sse/sst
-rsq
-
+pred <- data.frame(Market_Year = 2022, Arable_Land = 56.76217, Value = 4.46)
+y_hat <- predict(best_model, s = best_lambda, newx = pred)
 #98% of Ukraine's exports go through their ports
 
