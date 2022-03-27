@@ -1,0 +1,9 @@
+Comparing NDVI Year-End Values to Grain Production
+
+Year		NDVI_total	Wheat_Area_Harvested	Yield			NDVI_total_day_73
+2022		???					???										???				3.566
+2021		24.460			7.40 Million Ha				???				4.405
+2020		24.197			6.85 Million Ha				???				4.215
+2019		23.460			7.02 Million Ha				???				3.838
+2018		23.763			6.72 Million Ha				???				4.151
+2017

@@ -37,7 +37,7 @@ if __name__ == '__main__':
 	nasa_web_dir = "https://gimms.gsfc.nasa.gov/MODIS/std/GMOD09Q1/tif/NDVI/"
 	x_coord = 23
 	y_coord = 4
-	for year in range(2020, 2021):
+	for year in range(2018, 2019):
 		day = 1
 		while (day < 366):
 			file = download_tif(nasa_web_dir,year,day,x_coord,y_coord)

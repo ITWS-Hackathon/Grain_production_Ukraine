@@ -6,6 +6,7 @@ into a format that is more visually helpful
 import os
 from PIL import Image
 
+
 def convert(original,new):
 	if (os.path.exists(original)):
 		print("BEGINNING: {}".format(original))
@@ -21,19 +22,17 @@ def convert(original,new):
 					elif value == 255:
 						r,g,b=255,255,255
 				else:
-					scalar = (value-125) * .008
-					g = int(scalar*128+127)
-					r = int(scalar*-128+127)
+					scalar = (value) * .004
+					g = int(scalar*255)
+					r = int((1-scalar)*255)
 				new_image.putpixel((px,py),(r,g,b))
-		#new_image.show()
 		new_image.save(new)
 		print("FINISHED: {}".format(original))
 		o_image.close()
 		new_image.close()
 
 
-
 if __name__ == '__main__':
-	year = 2020
-	for day in range(1,365,8):
+	year = 2021
+	for day in range(1,9,8):
 		convert("../nasa_data/{0}-{1:03d}.tif".format(year,day),"../improved_data/{0}-{1:03d}.tif".format(year,day))
